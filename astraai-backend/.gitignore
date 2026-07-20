@@ -1,0 +1,25 @@
+# Virtual Environment
+venv/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+
+# VS Code
+.vscode/
+
+# Environment variables
+.env
+
+# Database
+astraai.db
+
+# ML Models
+*.pkl
+
+# macOS
+.DS_Store
+
+# Logs
+*.log
