@@ -11,67 +11,91 @@ function StatusCard({
   return (
     <motion.div
       whileHover={{
-        y: -6,
-        scale: 1.02,
+        y: -4,
+        scale: 1.015,
       }}
-      transition={{
-        duration: 0.25,
-      }}
-      className="group relative overflow-hidden rounded-3xl border border-white/5 bg-[#111827] p-6 shadow-xl transition-all duration-300 hover:border-cyan-500/30 hover:shadow-cyan-500/10"
+      transition={{ duration: 0.2 }}
+      className="
+        relative
+        h-[170px]
+        overflow-hidden
+        rounded-2xl
+        border
+        border-slate-700/60
+        bg-gradient-to-br
+        from-[#121d2d]
+        via-[#0f1727]
+        to-[#0b1220]
+        px-6
+        py-6
+        shadow-lg
+        transition-all
+        duration-300
+        hover:border-cyan-500/40
+        hover:shadow-cyan-500/20
+      "
     >
       {/* Glow */}
-      <div className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-cyan-500/10 blur-3xl transition group-hover:bg-cyan-500/20"></div>
 
-      <div className="relative">
+      <div className="absolute -right-8 -top-8 h-28 w-28 rounded-full bg-cyan-500/10 blur-3xl" />
 
-        {/* Top */}
-        <div className="flex items-start justify-between">
+      {/* Top */}
 
-          <div>
+      <div className="relative flex items-start justify-between">
 
-            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">
-              {title}
-            </p>
+        <div>
 
-            <h2 className={`mt-4 text-5xl font-black ${color}`}>
-              {value}
-            </h2>
+          <p className="text-sm font-semibold text-slate-500">
+            {title}
+          </p>
 
-          </div>
-
-          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-800 transition-all duration-300 group-hover:scale-110 group-hover:bg-slate-700">
-
-            <div className="text-3xl">
-              {icon}
-            </div>
-
-          </div>
+          <h2 className={`mt-3 text-4xl font-black leading-none ${color}`}>
+            {value}
+          </h2>
 
         </div>
 
-        {/* Bottom */}
-        <div className="mt-8 flex items-center justify-between">
+        <div
+          className="
+            flex
+            h-14
+            w-14
+            items-center
+            justify-center
+            rounded-2xl
+            border
+            border-slate-700
+            bg-slate-800/80
+            text-[30px]
+            shadow-inner
+          "
+        >
+          {icon}
+        </div>
 
-          <span className="text-sm text-slate-400">
-            {subtitle}
+      </div>
+
+      {/* Bottom */}
+
+      <div className="absolute bottom-5 left-5 right-5 flex items-center justify-between">
+
+        <span className="text-sm text-slate-400">
+          {subtitle}
+        </span>
+
+        <div className="flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-1">
+
+          <FaArrowTrendUp className="text-[10px] text-emerald-400" />
+
+          <span className="text-[11px] font-semibold text-emerald-400">
+            Stable
           </span>
-
-          <div className="flex items-center gap-2 rounded-full bg-emerald-500/10 px-3 py-1">
-
-            <FaArrowTrendUp className="text-xs text-emerald-400" />
-
-            <span className="text-xs font-semibold text-emerald-400">
-              +8%
-            </span>
-
-          </div>
 
         </div>
 
       </div>
 
-      {/* Accent */}
-      <div className="absolute bottom-0 left-0 h-1 w-full bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-500"></div>
+      <div className="absolute bottom-0 left-0 h-[3px] w-full bg-gradient-to-r from-cyan-500 via-sky-500 to-indigo-500" />
 
     </motion.div>
   );

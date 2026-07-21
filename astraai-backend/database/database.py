@@ -16,3 +16,8 @@ SessionLocal = sessionmaker(
 )
 
 Base = declarative_base()
+
+
+def init_db():
+    from database.models import Log
+    Base.metadata.create_all(bind=engine)

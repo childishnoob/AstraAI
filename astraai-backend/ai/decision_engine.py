@@ -1,34 +1,76 @@
 def decide(attack):
 
-    actions = {
+    responses = {
 
         "Brute Force": [
-            "Temporarily block source IP",
+            "Generate firewall rule",
+            "Block attacking IP address",
+            "Force password reset",
             "Enable Multi-Factor Authentication",
-            "Notify Security Team"
+            "Review authentication logs",
+            "Threat Neutralized"
         ],
 
         "DDoS": [
-            "Enable Rate Limiting",
-            "Block suspicious traffic",
-            "Activate DDoS protection"
+            "Enable rate limiting",
+            "Apply Web Application Firewall rules",
+            "Block malicious IP ranges",
+            "Redirect traffic through DDoS protection",
+            "Monitor network utilization",
+            "Threat Contained"
         ],
 
         "Port Scan": [
-            "Monitor source host",
+            "Block repeated scan attempts",
             "Increase firewall logging",
-            "Block repeated scans"
+            "Add source IP to watchlist",
+            "Collect Indicators of Compromise (IOC)",
+            "Continue monitoring activity"
+        ],
+
+        "Malware": [
+            "Terminate malicious process",
+            "Quarantine affected endpoint",
+            "Delete malicious executable",
+            "Run endpoint security scan",
+            "Threat Contained"
+        ],
+
+        "Ransomware": [
+            "Isolate infected endpoint",
+            "Disable SMB communication",
+            "Stop encryption process",
+            "Restore protected files",
+            "Notify Incident Response Team",
+            "Threat Contained"
+        ],
+
+        "Privilege Escalation": [
+            "Lock compromised account",
+            "Revoke elevated privileges",
+            "Rotate administrator credentials",
+            "Review authentication history",
+            "Threat Mitigated"
         ],
 
         "Data Exfiltration": [
-            "Isolate affected endpoint",
             "Terminate suspicious connection",
-            "Notify SOC Team"
-        ]
+            "Block outbound traffic",
+            "Quarantine endpoint",
+            "Capture forensic evidence",
+            "Notify Security Operations Center",
+            "Threat Neutralized"
+        ],
 
+        "Unknown Anomaly": [
+            "Collect forensic evidence",
+            "Run behavioral analysis",
+            "Escalate to SOC analyst",
+            "Continue monitoring"
+        ]
     }
 
-    return actions.get(
+    return responses.get(
         attack,
         [
             "Continue Monitoring"

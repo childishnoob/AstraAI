@@ -6,52 +6,57 @@ import {
   FaExclamationTriangle,
   FaRobot,
   FaShieldAlt,
+  FaFingerprint,
+  FaCircle,
 } from "react-icons/fa";
 
-const events = [
-  {
-    time: "18:42",
-    title: "User Login",
-    description: "Successful authentication from endpoint.",
-    icon: <FaCheckCircle />,
-    color: "text-emerald-400",
-    bg: "bg-emerald-500/10",
-  },
-  {
-    time: "18:44",
-    title: "SSH Failure",
-    description: "Multiple failed SSH login attempts.",
-    icon: <FaBug />,
-    color: "text-amber-400",
-    bg: "bg-amber-500/10",
-  },
-  {
-    time: "18:45",
-    title: "Brute Force",
-    description: "Credential attack detected by rule engine.",
-    icon: <FaExclamationTriangle />,
-    color: "text-red-400",
-    bg: "bg-red-500/10",
-  },
-  {
-    time: "18:46",
-    title: "AI Detection",
-    description: "Isolation Forest flagged anomalous behavior.",
-    icon: <FaRobot />,
-    color: "text-cyan-400",
-    bg: "bg-cyan-500/10",
-  },
-  {
-    time: "18:47",
-    title: "Alert Created",
-    description: "Incident forwarded to SOC analyst.",
-    icon: <FaShieldAlt />,
-    color: "text-violet-400",
-    bg: "bg-violet-500/10",
-  },
-];
+function IncidentTimeline({ data = [] }) {
+  const getIcon = (title = "") => {
 
-function IncidentTimeline() {
+    const t = title.toLowerCase();
+
+    if (t.includes("threat"))
+      return {
+        icon: <FaBug />,
+        color: "text-red-400",
+        bg: "bg-red-500/10",
+      };
+
+    if (t.includes("analysis"))
+      return {
+        icon: <FaRobot />,
+        color: "text-cyan-400",
+        bg: "bg-cyan-500/10",
+      };
+
+    if (t.includes("mitre"))
+      return {
+        icon: <FaFingerprint />,
+        color: "text-amber-400",
+        bg: "bg-amber-500/10",
+      };
+
+    if (t.includes("response"))
+      return {
+        icon: <FaShieldAlt />,
+        color: "text-violet-400",
+        bg: "bg-violet-500/10",
+      };
+
+    if (t.includes("closed") || t.includes("contained"))
+      return {
+        icon: <FaCheckCircle />,
+        color: "text-emerald-400",
+        bg: "bg-emerald-500/10",
+      };
+
+    return {
+      icon: <FaCircle />,
+      color: "text-slate-400",
+      bg: "bg-slate-700",
+    };
+  };
+
   return (
     <motion.div
       whileHover={{ y: -5 }}
@@ -59,6 +64,7 @@ function IncidentTimeline() {
       className="rounded-3xl border border-white/5 bg-[#111827] p-6 shadow-xl"
     >
       {/* Header */}
+
       <div className="mb-6 flex items-center justify-between">
         <div>
           <p className="text-xs uppercase tracking-[0.25em] text-slate-500">
@@ -75,33 +81,55 @@ function IncidentTimeline() {
         </div>
       </div>
 
-      <div className="relative ml-4 border-l border-slate-700">
-        {events.map((event, index) => (
-          <div key={index} className="relative mb-6 pl-8 last:mb-0">
-            <div
-              className={`absolute -left-[15px] flex h-7 w-7 items-center justify-center rounded-full ${event.bg}`}
-            >
-              <span className={event.color}>{event.icon}</span>
-            </div>
+      {!data.length ? (
+        <div className="rounded-2xl bg-slate-800/50 p-6 text-center text-slate-400">
+          Waiting for security events...
+        </div>
+      ) : (
+        <div className="relative ml-4 border-l border-slate-700">
 
-            <div className="rounded-2xl bg-slate-800/60 p-4 transition hover:bg-slate-800">
-              <div className="flex items-center justify-between">
-                <h3 className="font-semibold text-white">
-                  {event.title}
-                </h3>
+          {data.map((event, index) => {
 
-                <span className="text-xs font-medium text-slate-400">
-                  {event.time}
-                </span>
+            const style = getIcon(event.title);
+
+            return (
+              <div
+                key={index}
+                className="relative mb-6 pl-8 last:mb-0"
+              >
+                <div
+                  className={`absolute -left-[15px] flex h-7 w-7 items-center justify-center rounded-full ${style.bg}`}
+                >
+                  <span className={style.color}>
+                    {style.icon}
+                  </span>
+                </div>
+
+                <div className="rounded-2xl bg-slate-800/60 p-4 hover:bg-slate-800 transition">
+
+                  <div className="flex items-center justify-between">
+
+                    <h3 className="font-semibold text-white">
+                      {event.title}
+                    </h3>
+
+                    <span className="text-xs font-medium text-slate-400">
+                      {event.time}
+                    </span>
+
+                  </div>
+
+                  <p className="mt-2 text-sm leading-6 text-slate-400">
+                    {event.description}
+                  </p>
+
+                </div>
+
               </div>
-
-              <p className="mt-2 text-sm leading-6 text-slate-400">
-                {event.description}
-              </p>
-            </div>
-          </div>
-        ))}
-      </div>
+            );
+          })}
+        </div>
+      )}
     </motion.div>
   );
 }

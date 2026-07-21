@@ -15,24 +15,40 @@ api.interceptors.response.use(
 
 export default api;
 
+// ===========================
 // Dashboard
+// ===========================
+
 export const getDashboard = () => api.get("/api/dashboard");
 
+// ===========================
 // Monitoring
+// ===========================
+
 export const startMonitor = () => api.post("/api/start-monitor");
+
 export const stopMonitor = () => api.post("/api/stop-monitor");
 
+// ===========================
 // Live Data
+// ===========================
+
 export const getLogs = (limit = 50) =>
   api.get(`/api/logs?limit=${limit}`);
 
 export const getThreats = (limit = 50) =>
   api.get(`/api/threats?limit=${limit}`);
 
+export const getBlockedIPs = (limit = 20) =>
+  api.get(`/api/blocked-ips?limit=${limit}`);
+
 export const getRisk = () =>
   api.get("/api/risk");
 
+// ===========================
 // Intelligence
+// ===========================
+
 export const getMitre = () =>
   api.get("/api/mitre");
 
@@ -45,6 +61,19 @@ export const getLatestThreat = () =>
 export const getAIInsights = () =>
   api.get("/api/ai-insights");
 
+// ===========================
 // Health
+// ===========================
+
 export const getBackendStatus = () =>
   api.get("/health");
+
+// ===========================
+// Demo
+// ===========================
+
+export const startDemo = () =>
+  api.post("/api/demo/start");
+
+export const stopDemo = () =>
+  api.post("/api/demo/stop");

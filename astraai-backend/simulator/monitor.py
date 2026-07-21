@@ -13,6 +13,8 @@ from ai.risk_engine import calculate_risk
 from ai.decision_engine import decide
 from ai.anomaly_detector import detect_anomaly
 
+from ai.response_engine import execute_response
+
 from utils.storage import (
     logs,
     threats,
@@ -25,6 +27,22 @@ from database.database import SessionLocal
 from database.crud import create_log
 
 thread = None
+
+# Demo mode flag
+DEMO_MODE = False
+
+# Sequential attack chain used during demo mode
+ATTACK_CHAIN = [
+    "Port Scan",
+    "Brute Force",
+    "Privilege Escalation",
+    "Malware",
+    "Ransomware",
+    "DDoS",
+    "Data Exfiltration",
+]
+
+attack_index = 0
 
 
 def add_event(title, description):
@@ -48,15 +66,19 @@ def update_dashboard_risk():
     for t in list(threats)[-20:]:
 
         severity = t["severity"]
+        contained = t.get("containment") == "Contained"
 
         if severity == "Low":
-            score += 5
+            score += 1 if contained else 2
+
         elif severity == "Medium":
-            score += 15
+            score += 2 if contained else 6
+
         elif severity == "High":
-            score += 25
+            score += 4 if contained else 10
+
         elif severity == "Critical":
-            score += 40
+            score += 5 if contained else 15
 
     score = min(score, 100)
 
@@ -74,14 +96,40 @@ def update_dashboard_risk():
     risk["updated_at"] = datetime.now().strftime("%H:%M:%S")
 
 
+def generate_demo_attack():
+    global attack_index
+
+    attack = generate_attack()
+
+    attack["attack_type"] = ATTACK_CHAIN[attack_index]
+    attack["event"] = ATTACK_CHAIN[attack_index]
+
+    attack_index = (attack_index + 1) % len(ATTACK_CHAIN)
+
+    return attack
+
+
 def monitor():
 
     while status["monitoring"]:
 
         try:
 
-            log = generate_attack() if random.randint(1, 5) == 1 else generate_log()
+            # -------------------------
+            # Generate traffic
+            # -------------------------
+            if DEMO_MODE:
+                log = generate_demo_attack()
+            else:
+                log = (
+                    generate_attack()
+                    if random.random() < 0.45
+                    else generate_log()
+                )
 
+            # -------------------------
+            # AI Anomaly Detection
+            # -------------------------
             ai_result = detect_anomaly(log)
             log["ai_confidence"] = ai_result["confidence"]
 
@@ -91,41 +139,100 @@ def monitor():
                 analysis["detected"] = True
                 analysis["attack"] = "Unknown Anomaly"
 
+            # -------------------------
+            # Threat Detected
+            # -------------------------
             if analysis["detected"]:
 
                 explanation = explain(analysis["attack"])
-                severity = calculate_risk(log, analysis["attack"])
+                risk_result = calculate_risk(log, analysis["attack"])
                 mitre = map_attack(analysis["attack"])
-                actions = decide(analysis["attack"])
+                response = execute_response(log, analysis["attack"])
+                actions = response["actions"]
+
 
                 log.update({
-                    "attack": True,
+                    "attack": analysis["attack"],
                     "attack_type": analysis["attack"],
-                    "severity": severity,
+                    "severity": risk_result["level"],
+                    "risk_score": risk_result["score"],
                     "summary": explanation["summary"],
                     "reason": explanation["reason"],
                     "recommendation": explanation["recommendation"],
+                    "impact": explanation.get("impact", ""),
+                    "priority": explanation.get("priority", "Low"),
                     "mitre_id": mitre["technique"],
                     "mitre_name": mitre["name"],
                     "actions": actions,
+
+                    "containment": response["status"],
+                    "blocked": response["blocked"],
+                    "response_time": response["response_time"],
                 })
 
                 threats.append(log)
 
                 add_event(
-                    analysis["attack"],
-                    f"{severity} threat detected from {log['source_ip']}"
+                    "🚨 Threat Detected",
+                    f"{analysis['attack']} detected from {log['source_ip']}"
                 )
 
+                time.sleep(0.2)
+
+                add_event(
+                    "🤖 AI Analysis",
+                    f"Confidence: {log['ai_confidence']}% • Severity: {risk_result['level']}"
+                )
+
+                time.sleep(0.2)
+
+                add_event(
+                    "🗺 MITRE ATT&CK",
+                    f"{mitre['technique']} • {mitre['name']}"
+                )
+
+                time.sleep(0.2)
+
+                add_event(
+                    "🛡 Autonomous Response",
+                    f"{actions[0]} executed against {log['source_ip']}"
+                )
+
+                time.sleep(0.2)
+
+                for action in actions:
+                    add_event(
+                        "AI Response",
+                        action
+                    )
+                    time.sleep(0.15)
+
+                add_event(
+                    "✅ Threat Contained",
+                    f"Incident contained in {response['response_time']} seconds."
+                )
+
+
+                add_event(
+                    "📁 Incident Closed",
+                    "No further malicious activity detected."
+                )
+
+            # -------------------------
+            # Normal Traffic
+            # -------------------------
             else:
 
                 log.update({
-                    "attack": False,
+                    "attack": None,
                     "attack_type": None,
                     "severity": "Low",
+                    "risk_score": 0,
                     "summary": "Normal network activity.",
                     "reason": [],
                     "recommendation": [],
+                    "impact": "None",
+                    "priority": "Low",
                     "mitre_id": "-",
                     "mitre_name": "-",
                     "actions": ["Continue Monitoring"],
@@ -136,6 +243,9 @@ def monitor():
                     f"Traffic from {log['source_ip']} verified."
                 )
 
+            # -------------------------
+            # Store Log
+            # -------------------------
             logs.append(log)
 
             update_dashboard_risk()
@@ -151,7 +261,7 @@ def monitor():
                 f"[{log['timestamp']}] "
                 f"{log['attack_type'] or 'Normal'} | "
                 f"{log['severity']} | "
-                f"Risk {risk['score']}% | "
+                f"Risk {log.get('risk_score', 0)}% | "
                 f"AI {log['ai_confidence']}%"
             )
 

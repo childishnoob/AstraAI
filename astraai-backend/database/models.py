@@ -4,7 +4,6 @@ from sqlalchemy import String
 from sqlalchemy import Boolean
 from sqlalchemy import Float
 
-
 from database.database import Base
 
 
@@ -36,11 +35,17 @@ class Log(Base):
 
     severity = Column(String)
 
+    risk_score = Column(Integer)
+
     summary = Column(String)
 
     reason = Column(String)
 
     recommendation = Column(String)
+
+    impact = Column(String)
+
+    priority = Column(String)
 
     mitre_id = Column(String)
 
@@ -49,4 +54,3 @@ class Log(Base):
     actions = Column(String)
 
     ai_confidence = Column(Float)
-    

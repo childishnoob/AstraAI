@@ -4,12 +4,11 @@ import json
 
 
 def create_log(db: Session, log_data: dict):
-
     data = log_data.copy()
 
-    data["reason"] = json.dumps(data["reason"])
-    data["recommendation"] = json.dumps(data["recommendation"])
-    data["actions"] = json.dumps(data["actions"])
+    data["reason"] = json.dumps(data.get("reason", []))
+    data["recommendation"] = json.dumps(data.get("recommendation", []))
+    data["actions"] = json.dumps(data.get("actions", []))
 
     log = Log(**data)
 
@@ -21,8 +20,12 @@ def create_log(db: Session, log_data: dict):
 
 
 def get_logs(db: Session):
-
-    return db.query(Log).order_by(Log.id.desc()).limit(100).all()
+    return (
+        db.query(Log)
+        .order_by(Log.id.desc())
+        .limit(100)
+        .all()
+    )
 
 
 def get_dashboard_stats(db: Session):
@@ -31,44 +34,76 @@ def get_dashboard_stats(db: Session):
 
     total_logs = len(logs)
 
-    threats = sum(1 for log in logs if log.attack)
+    threats = [log for log in logs if log.attack]
+
+    threat_count = len(threats)
 
     critical = sum(
-        1
-        for log in logs
+        1 for log in threats
         if log.severity == "Critical"
     )
 
     high = sum(
-        1
-        for log in logs
+        1 for log in threats
         if log.severity == "High"
     )
 
-    average_confidence = 0
+    medium = sum(
+        1 for log in threats
+        if log.severity == "Medium"
+    )
+
+    low = sum(
+        1 for log in threats
+        if log.severity == "Low"
+    )
 
     confidence_values = [
         log.ai_confidence
-        for log in logs
+        for log in threats
         if log.ai_confidence is not None
     ]
 
-    if confidence_values:
-        average_confidence = round(
-            sum(confidence_values) / len(confidence_values),
-            2
-        )
+    average_confidence = (
+        round(sum(confidence_values) / len(confidence_values), 2)
+        if confidence_values
+        else 0
+    )
+
+    # ------------------------
+    # Dashboard Risk Score
+    # ------------------------
+
+    risk_values = [
+        log.risk_score
+        for log in threats
+        if getattr(log, "risk_score", None) is not None
+    ]
+
+    if risk_values:
+        risk_score = round(sum(risk_values) / len(risk_values))
+    else:
+        risk_score = 0
+
+    if risk_score >= 80:
+        risk_level = "Critical"
+    elif risk_score >= 60:
+        risk_level = "High"
+    elif risk_score >= 30:
+        risk_level = "Medium"
+    else:
+        risk_level = "Low"
 
     return {
-
         "total_logs": total_logs,
-
-        "threats": threats,
-
+        "threats": threat_count,
         "critical": critical,
-
         "high": high,
-
-        "average_confidence": average_confidence
-
+        "medium": medium,
+        "low": low,
+        "average_confidence": average_confidence,
+        "risk": {
+            "score": risk_score,
+            "level": risk_level,
+        },
     }

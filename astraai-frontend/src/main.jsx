@@ -10,14 +10,20 @@ createRoot(document.getElementById("root")).render(
     <App />
 
     <Toaster
-      position="top-right"
+      position="bottom-right"
+      containerStyle={{
+        top: 95,
+        right: 20,
+        pointerEvents: "none",
+      }}
       toastOptions={{
-        duration: 3000,
+        duration: 2000,
         style: {
           background: "#111827",
           color: "#fff",
           border: "1px solid #334155",
           borderRadius: "12px",
+          pointerEvents: "auto",
         },
         success: {
           iconTheme: {

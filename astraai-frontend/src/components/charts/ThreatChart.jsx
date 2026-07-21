@@ -42,7 +42,7 @@ function ThreatChart({ threats = [] }) {
             Analytics
           </p>
 
-          <h2 className="mt-1 text-2xl font-bold text-white">
+          <h2 className="mt-1 pl-1 text-2xl font-bold text-white">
             Threat Distribution
           </h2>
         </div>
