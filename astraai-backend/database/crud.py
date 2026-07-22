@@ -10,6 +10,14 @@ def create_log(db: Session, log_data: dict):
     data["recommendation"] = json.dumps(data.get("recommendation", []))
     data["actions"] = json.dumps(data.get("actions", []))
 
+    # ==========================
+    # TEMP DEMO FIX
+    # ==========================
+    data.pop("containment", None)
+    data.pop("blocked", None)
+    data.pop("response_time", None)
+    # ==========================
+
     log = Log(**data)
 
     db.add(log)
@@ -69,10 +77,6 @@ def get_dashboard_stats(db: Session):
         if confidence_values
         else 0
     )
-
-    # ------------------------
-    # Dashboard Risk Score
-    # ------------------------
 
     risk_values = [
         log.risk_score

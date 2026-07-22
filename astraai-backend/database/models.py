@@ -29,7 +29,7 @@ class Log(Base):
 
     event = Column(String)
 
-    attack = Column(Boolean)
+    attack = Column(String)
 
     attack_type = Column(String)
 
@@ -52,5 +52,11 @@ class Log(Base):
     mitre_name = Column(String)
 
     actions = Column(String)
+
+    containment = Column(String)
+
+    blocked = Column(Boolean)
+
+    response_time = Column(Float)
 
     ai_confidence = Column(Float)

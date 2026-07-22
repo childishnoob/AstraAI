@@ -29,7 +29,7 @@ from database.crud import create_log
 thread = None
 
 # Demo mode flag
-DEMO_MODE = False
+DEMO_MODE = True
 
 # Sequential attack chain used during demo mode
 ATTACK_CHAIN = [
@@ -110,6 +110,8 @@ def generate_demo_attack():
 
 
 def monitor():
+
+    print(">>> MONITOR LOOP STARTED <<<")
 
     while status["monitoring"]:
 
@@ -275,9 +277,13 @@ def start_monitor():
 
     global thread
 
+    print(">>> START_MONITOR CALLED <<<")
+
+    status["monitoring"] = True
+
     if thread is None or not thread.is_alive():
 
-        status["monitoring"] = True
+        print(">>> THREAD STARTED <<<")
 
         add_event(
             "Monitoring Started",
