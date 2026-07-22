@@ -1,246 +1,321 @@
-# AstraAI
+<div align="center">
 
-![Python](https://img.shields.io/badge/Python-3.11-blue)
+# 🛡️ AstraAI
 
-![FastAPI](https://img.shields.io/badge/FastAPI-Backend-green)
+### AI-Powered Autonomous Security Operations Center (SOC)
 
-![React](https://img.shields.io/badge/React-Frontend-61DAFB)
-
-![License](https://img.shields.io/badge/License-MIT-yellow)
-
-> **An AI-Powered Security Operations Center for Real-Time Threat Detection, Risk Assessment, and Autonomous Incident Response**
-
-AstraAI is an AI-powered Cyber Security Operations Center (SOC) platform designed to improve cyber resilience for Critical National Infrastructure (CNI). It continuously monitors network activity, detects anomalies using Artificial Intelligence, maps threats to the MITRE ATT&CK framework, evaluates organizational risk, and recommends autonomous response actions in real time.
-
-## Table of Contents
-
-- [Problem Statement](#problem-statement)
-- [Why AstraAI?](#why-astraai)
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [Architecture](#architecture)
-- [Screenshots](#screenshots)
-- [API Endpoints](#api-endpoints)
-- [Quick Start](#quick-start)
-- [Demo Workflow](#demo-workflow)
-- [Future Improvements](#future-improvements)
-- [Team](#team)
-- [Impact](#impact)
-- [License](#license)
+**Enhancing Cyber Resilience for Critical National Infrastructure**
 
 ---
 
-# Problem Statement
+![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![SQLite](https://img.shields.io/badge/SQLite-003B57?style=for-the-badge&logo=sqlite&logoColor=white)
+![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-F7931E?style=for-the-badge&logo=scikitlearn&logoColor=white)
 
-Critical infrastructure organizations face thousands of security events every day. Security analysts often struggle to identify genuine attacks among massive volumes of logs.
-
-AstraAI reduces detection and response time by combining:
-
-- AI-based anomaly detection
-- Rule-based threat detection
-- MITRE ATT&CK mapping
-- Risk scoring
-- Explainable AI
-- Autonomous recommendations
+</div>
 
 ---
 
-# Why AstraAI?
+# 📖 Overview
 
-Traditional security tools generate thousands of alerts, forcing analysts to manually investigate incidents. AstraAI combines artificial intelligence with explainable threat analysis to automatically identify suspicious behaviour, estimate organizational risk, map attacks to the MITRE ATT&CK framework, and recommend immediate response actions through an interactive Security Operations Center dashboard.
+AstraAI is an AI-powered Autonomous Security Operations Center (SOC) prototype developed to improve the cyber resilience of Critical National Infrastructure (CNI).
+
+The platform continuously monitors network activity, detects suspicious behaviour using machine learning, classifies attacks, maps them to the MITRE ATT&CK framework, assesses risk, performs simulated autonomous response actions, and presents all security events through a modern real-time SOC dashboard.
+
+Rather than only generating alerts, AstraAI demonstrates how AI can assist security analysts throughout the incident lifecycle, from detection to response and reporting.
 
 ---
 
-# Features
+# ✨ Key Features
 
-## Core Features
+### 🤖 AI Threat Detection
 
-### AI Engine
-- Isolation Forest anomaly detection
-- Confidence scoring
-- Behavioural analysis
-- Unknown anomaly detection
+- Isolation Forest based anomaly detection
+- AI confidence scoring
+- Intelligent threat classification
+- Real-time security monitoring
 
-### Threat Detection
-- Brute Force
-- Port Scan
-- Malware
-- Data Exfiltration
-- Privilege Escalation
-- DDoS
+### 🛡️ Autonomous Response
 
-### Explainable AI
-- AI-generated summaries
-- Threat reasoning
-- Risk scoring
-- Recommended mitigation actions
+- Simulated malicious IP blocking
+- Endpoint isolation simulation
+- Automated containment actions
+- Response history tracking
+- Response time monitoring
 
-### SOC Dashboard
-- Live monitoring
-- MITRE ATT&CK mapping
+### 📊 SOC Dashboard
+
+- Live network traffic visualization
+- Threat distribution analytics
+- Dynamic cyber risk gauge
+- Interactive security dashboard
+- Live threat notifications
+
+### 🗺️ MITRE ATT&CK Integration
+
+- Automatic ATT&CK technique mapping
+- MITRE IDs
+- Technique descriptions
+- Security context for detected attacks
+
+### 🧠 AI Security Copilot
+
+- AI-generated incident summaries
+- Threat explanations
+- Recommended security actions
+- Incident insights
+
+### 📜 Incident Reporting
+
+- Executive incident reports
 - Incident timeline
-- AI Copilot
-- Network analytics
-- Threat intelligence
+- Threat history
+- Response tracking
 
 ---
 
-# Tech Stack
+# 🎯 Supported Attack Types
 
-### Frontend
+- Port Scan
+- Brute Force
+- Malware
+- Ransomware
+- DDoS
+- Privilege Escalation
+- Data Exfiltration
+- Unknown AI Anomalies
+
+---
+
+# 🏗️ System Architecture
+
+```text
+                +----------------------+
+                | Traffic Simulator    |
+                +----------+-----------+
+                           |
+                           v
+                 +----------------------+
+                 | AI Detection Engine  |
+                 +----------+-----------+
+                           |
+          +----------------+----------------+
+          |                                 |
+          v                                 v
+   MITRE ATT&CK Mapper             Risk Assessment
+          |                                 |
+          +----------------+----------------+
+                           |
+                           v
+              Autonomous Response Engine
+                           |
+                           v
+                  Executive Reporting
+                           |
+                           v
+                Real-Time SOC Dashboard
+```
+
+---
+
+# ⚙️ AI Workflow
+
+```text
+Network Traffic
+        │
+        ▼
+AI Anomaly Detection
+        │
+        ▼
+Threat Classification
+        │
+        ▼
+MITRE ATT&CK Mapping
+        │
+        ▼
+Risk Assessment
+        │
+        ▼
+AI Explanation
+        │
+        ▼
+Autonomous Response
+        │
+        ▼
+Dashboard & Incident Report
+```
+
+---
+
+# 🖥️ Dashboard Modules
+
+- Live Monitoring
+- Network Traffic Analytics
+- Threat Distribution
+- Dynamic Risk Assessment
+- AI Security Copilot
+- MITRE ATT&CK Mapping
+- Autonomous Response
+- Incident Timeline
+- Executive Reports
+
+---
+
+# 🛠️ Technology Stack
+
+## Frontend
 
 - React
 - Vite
-- TailwindCSS
-- Axios
-- Recharts
+- Tailwind CSS
 - Framer Motion
+- React Icons
+- Chart.js
 
-### Backend
+## Backend
 
 - FastAPI
 - Python
-
-### AI
-
-- Scikit-Learn
-- Isolation Forest
-
-### Database
-
 - SQLite
 - SQLAlchemy
 
+## Artificial Intelligence
+
+- Scikit-learn
+- Isolation Forest
+- Rule-based Threat Classification
+- Dynamic Risk Assessment
+
 ---
 
-# Architecture
+# 📂 Project Structure
 
-The AstraAI pipeline processes network events through AI-powered detection, correlates threats with MITRE ATT&CK techniques, calculates organizational risk, and visualizes everything through a real-time SOC dashboard.
-
-
+```text
+AstraAI
+│
+├── astraai-backend
+│   ├── ai
+│   ├── api
+│   ├── database
+│   ├── simulator
+│   └── utils
+│
+├── astraai-frontend
+│   ├── src
+│   │   ├── components
+│   │   ├── charts
+│   │   ├── dashboard
+│   │   ├── modals
+│   │   └── services
+│   └── public
+│
+└── README.md
 ```
-             Network Logs
-                   │
-                   ▼
-        FastAPI Backend API
-                   │
-         ┌─────────┴─────────┐
-         ▼                   ▼
-  Rule-Based Engine     AI Detection
-                               │
-                               ▼
-                     Isolation Forest
-                               │
-         ┌─────────┬──────────┬─────────┐
-         ▼         ▼          ▼         ▼
-      Threats    Risk      MITRE     AI Summary
-         │
-         ▼
-     React SOC Dashboard
-```
 
 ---
 
-# Screenshots
+# 🚀 Installation
 
-## Dashboard Overview
-
-The main Security Operations Center dashboard showing live logs, KPIs, monitoring controls, and real-time threat notifications.
-
-![Dashboard Overview](images/dashboard.png)
-
----
-
-## AI Analytics
-
-Live analytics including threat distribution, network traffic visualization, AI-generated risk assessment, system health monitoring, and the AI Security Copilot.
-
-![AI Analytics](images/analytics.png)
-
----
-
-## Threat Intelligence & Incident Response
-
-MITRE ATT&CK mapping, incident timeline, threat analysis, AI recommendations, and automated response actions.
-
-![Threat Intelligence](images/threat-intelligence.png)
-
----
-
-# API Endpoints
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | /api/dashboard | Dashboard statistics |
-| GET | /api/logs | Live security logs |
-| GET | /api/threats | Detected threats |
-| GET | /api/threat/latest | Latest detected threat |
-| GET | /api/risk | Risk score |
-| GET | /api/timeline | Incident timeline |
-| GET | /api/mitre | MITRE ATT&CK mapping |
-| GET | /api/ai-insights | AI-generated insights |
-| POST | /api/start-monitor | Start monitoring |
-| POST | /api/stop-monitor | Stop monitoring |
-| POST | /api/demo/start | Start demo mode |
-| POST | /api/demo/stop | Stop demo mode |
-
----
-
-# Quick Start
+## Clone the Repository
 
 ```bash
-# Backend
-cd astraai-backend
-pip install -r requirements.txt
-uvicorn main:app --reload
+git clone https://github.com/childishnoob/AstraAI.git
+```
 
-# Frontend
+## Backend
+
+```bash
+cd astraai-backend
+
+pip install -r requirements.txt
+
+uvicorn main:app --reload
+```
+
+## Frontend
+
+```bash
 cd astraai-frontend
+
 npm install
+
 npm run dev
 ```
 
 ---
 
-# Demo Workflow
+# 📸 Application Screenshots
 
-1. Start Monitoring
-2. Launch Demo Mode
-3. Simulated cyber attacks are generated
-4. AI detects anomalous behaviour
-5. Threats are classified
-6. MITRE ATT&CK techniques are mapped
-7. Organizational risk is updated
-8. AI recommends response actions
-9. Dashboard visualizes everything in real time
+The following screenshots will be added before the final submission:
 
----
-
-
-# Future Improvements
-
-- Multi-user authentication
-- SIEM integration
-- Email & Slack alerts
-- Cloud deployment
-- Threat intelligence feeds
-- Automated firewall integration
+- Dashboard Overview
+- AI Security Copilot
+- Autonomous Response Panel
+- MITRE ATT&CK Mapping
+- Incident Timeline
+- Executive Report
 
 ---
 
-# Team
+# 📈 Example Incident Flow
 
-- Harshita Gupta
-- Ansh Sharma
+```text
+┌───────────────────────┐
+│  Network Traffic      │
+└──────────┬────────────┘
+           │
+           ▼
+┌───────────────────────┐
+│ AI Threat Detection   │
+└──────────┬────────────┘
+           │
+           ▼
+┌───────────────────────┐
+│ MITRE ATT&CK Mapping  │
+└──────────┬────────────┘
+           │
+           ▼
+┌───────────────────────┐
+│ Autonomous Response   │
+└──────────┬────────────┘
+           │
+           ▼
+┌───────────────────────┐
+│ SOC Dashboard         │
+└───────────────────────┘
+```
 
 ---
 
-# Impact
+# 🔮 Future Enhancements
 
-AstraAI demonstrates how explainable artificial intelligence can help security teams detect threats faster, reduce analyst workload, improve cyber resilience, and strengthen the protection of critical national infrastructure through autonomous monitoring and intelligent decision support.
+- SIEM Integration
+- Threat Intelligence Feeds
+- Email Notifications
+- Live Packet Capture
+- Cloud Deployment
+- PDF Report Export
+- Multi-user Authentication
+- Role-Based Access Control
 
 ---
 
-# License
+# 🏆 Hackathon Submission
 
-MIT License
+AstraAI was developed as a prototype for the **AI Cyber Resilience Hackathon** to demonstrate how Artificial Intelligence can enhance modern Security Operations Centers by combining:
+
+- AI-powered anomaly detection
+- Real-time threat monitoring
+- MITRE ATT&CK mapping
+- Dynamic risk assessment
+- Autonomous incident response
+- Intelligent incident reporting
+
+---
+
+# 👥 Team
+
+- **Harshita Gupta**
+- **Ansh Sharma**
